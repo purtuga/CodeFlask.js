@@ -1,17 +1,8 @@
-(function(global, factory) {
-    if (typeof exports === 'object' && typeof module == "object") { // CommonJS
-        module.exports = factory();
-    } else if (typeof define === 'function' && define.amd) { // AMD
-        define([], factory);
-    } else { // Browser
-        global.CodeFlask = factory();
-    }
-})(this, function() {
-
-function CodeFlask(indent) {
+export function CodeFlask(indent) {
     this.indent = indent || "    ";
     this.docroot = document;
 }
+export default CodeFlask;
 
 CodeFlask.isString = function(x) {
     return Object.prototype.toString.call(x) === "[object String]";
@@ -241,7 +232,7 @@ CodeFlask.prototype.handleInput = function(textarea, highlightCode, highlightPre
             }
             
             self.renderOutput(highlightCode, input);
-            Prism.highlightAll();
+            Prism.highlightElement(self.highlightCode);
         }
 
     });
@@ -250,7 +241,7 @@ CodeFlask.prototype.handleInput = function(textarea, highlightCode, highlightPre
 CodeFlask.prototype.handleScroll = function(textarea, highlightPre) {
     textarea.addEventListener('scroll', function(){
 
-        roundedScroll = Math.floor(this.scrollTop);
+        const roundedScroll = Math.floor(this.scrollTop);
 
         // Fixes issue of desync text on mouse wheel, fuck Firefox.
         if(navigator.userAgent.toLowerCase().indexOf('firefox') < 0) {
@@ -298,6 +289,3 @@ CodeFlask.prototype.highlight = function(highlightCode) {
     var Prism = window.Prism || require('prismjs')
     Prism.highlightElement(highlightCode);
 }
-
-return CodeFlask;
-});

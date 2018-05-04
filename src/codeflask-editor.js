@@ -1,4 +1,4 @@
-const codeFlaskOwnerDoc = document.currentScript.ownerDocument
+import { CodeFlask } from "./codeflask.js"
 
 class CodeflaskEditor extends HTMLElement {
     constructor() {
@@ -70,6 +70,7 @@ class CodeflaskEditor extends HTMLElement {
                 pointer-events:none;
                 overflow-y:auto;
                 margin:0;
+                height:100%;
                 min-height:100%;
                 margin:0 !important;
                 background:transparent !important;
@@ -151,6 +152,11 @@ class CodeflaskEditor extends HTMLElement {
         }
     }
 
+    // Must be called to define the Element on the page
+    static define(tagName) {
+        customElements.define(tagName || 'codeflask-editor', this);
+    }
+
     connectedCallback() {
         if (this.initSlot) {
             let value = '';
@@ -206,4 +212,8 @@ class CodeflaskEditor extends HTMLElement {
     }
 }
 
-customElements.define('codeflask-editor', CodeflaskEditor);
+export {
+    CodeFlask,
+    CodeflaskEditor
+};
+export default CodeflaskEditor;
